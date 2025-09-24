@@ -9,30 +9,20 @@ const CreationPage = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/verifymail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
 
-      const data = await res.json();
-
-      console.log(data);
-
-      if (data.unique) {
-        const res2 = await fetch("http://localhost:3000/generatepassword", {
+        const res2 = await fetch("http://localhost:3000/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
 
         const passData = await res2.json();
-        alert("Votre mot de passe est : " + passData.password);
-      } else {
-        if (window.confirm("Cet email est déjà utilisé ! Cliquez sur OK pour retourner à la page d'accueil.")) {
-          navigate("/userInfoCreation"); // Redirect to /home or any other route you prefer
+        if(passData.password){
+            alert(passData.message + " : " + passData.password);
+        }else{
+            alert(passData.error);
+
         }
-      }
     } catch (err) {
       alert("Erreur : " + err);
     }
