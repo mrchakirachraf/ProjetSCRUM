@@ -9,7 +9,7 @@ const authRoutes = require("./routes/auth.route");
 const userInfoRoutes = require("./routes/userInfo.route"); 
 
 const app = express();
-/*app.use(cors());*/
+//app.use(cors());
 app.use(express.json());
 
 
@@ -25,7 +25,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false,
-      sameSite: "lax"
+      sameSite: "none"
 
     }, 
   })
