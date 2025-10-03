@@ -12,9 +12,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
 app.use(cors({
-  origin: "http://localhost:5173", // ton frontend
-  credentials: true // ⚡ obligatoire pour envoyer les cookies
+  origin: "http://localhost:5173", 
+  credentials: true 
 }));
 
 
@@ -23,7 +24,10 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // mettre true si HTTPS
+    cookie: { secure: false,
+      sameSite: "lax"
+
+    }, 
   })
 );
 
