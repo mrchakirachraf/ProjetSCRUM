@@ -11,7 +11,7 @@ const App = () =>{
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<CreationPage />} />
+        <Route path="/register" element={<CreationPage />} />
         <Route path="/userInfoCreation" element={<UserInfoCreation />} />
       </Routes>
     </Router>
