@@ -28,20 +28,13 @@ register: async (req, res) => {
     const existing = await User.findByEmail(email);
     if (existing) return res.status(400).json({ error: "Email déjà utilisé" });
 
-    // Génération du mot de passe temporaire en clair
    const tempPassword = generatePassword(10);
 
-
-    // Hash du mot de passe avant insertion en base
     const hashedPassword = await bcrypt.hash(tempPassword, 10);
-
-    // Création de l'utilisateur en base
     const userId = await User.create(email, hashedPassword);
 
-    // Démarrer la session
     req.session.userId = userId;
 
-    // Retourner le mot de passe clair au frontend
     res.status(201).json({
       message: "Inscription réussie",
       password: tempPassword
@@ -73,6 +66,32 @@ register: async (req, res) => {
     req.session.destroy();
     res.json({ message: "Déconnecté" });
   },
+
+    me: async (req, res) => {
+    if (!req.session.userId) {
+      return res.status(401).json({ error: "Non autorisé" });
+    }
+
+    try {
+      const user = await User.findById(req.session.userId); // tu ajoutes findById dans ton modèle
+      if (!user) {
+        return res.status(404).json({ error: "Utilisateur introuvable" });
+      }
+
+      // ✅ on retourne uniquement les infos utiles (sans mot de passe !)
+      res.json({
+        id: user.id,
+        email: user.email,
+        nom: user.nom,
+        prenom: user.prenom,
+        epargne_vie : user.epargne_vie,
+        salaire:user.salaire
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Erreur serveur" });
+    }
+  }
 };
 
 module.exports = authController;

@@ -6,7 +6,7 @@ async create(email, hashedPassword) {
     "INSERT INTO users (email, password) VALUES (?, ?)",
     [email, hashedPassword]
   );
-  return result.insertId; // ⚠️ important sinon userId sera undefined
+  return result.insertId; 
 },
 
 
@@ -15,12 +15,24 @@ async create(email, hashedPassword) {
     return rows[0];
   },
 
-  async updateProfile(id, { nom, prenom, age, salaire, epargne_vie }) {
+  async updateProfile(id, { nom, prenom, age, salaire, epargne_vie, profession }) {
   await pool.query(
-    "UPDATE users SET nom=?, prenom=?, age=?, salaire=?, epargne_vie=? WHERE id=?",
-    [nom, prenom, age, salaire, epargne_vie, id]
+    "UPDATE users SET nom=?, prenom=?, age=?, salaire=?, epargne_vie=?, profession=? WHERE id=?",
+    [nom, prenom, age, salaire, epargne_vie, profession, id]
+  );
+},
+
+async findById(id) {
+  const [rows] = await pool.query("SELECT * FROM users WHERE id = ?", [id]);
+  return rows[0];
+},
+async updateSalary(userId, montantDepense) {
+  await pool.query(
+    "UPDATE users SET salaire = salaire - ? WHERE id = ?",
+    [montantDepense, userId]
   );
 }
+
 
 };
 
