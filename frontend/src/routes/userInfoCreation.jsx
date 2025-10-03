@@ -19,7 +19,7 @@ const UserInfoCreation = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/api/user/info", {
+      const res = await fetch("http://localhost:3000/api/user/infoUser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
