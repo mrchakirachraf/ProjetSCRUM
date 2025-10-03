@@ -19,6 +19,7 @@ const CreationPage = () => {
         const passData = await res2.json();
         if(passData.password){
             alert(passData.message + " : " + passData.password);
+            navigate("/userInfoCreation");
         }else{
             alert(passData.error);
 
