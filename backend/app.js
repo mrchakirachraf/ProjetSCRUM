@@ -9,14 +9,14 @@ const authRoutes = require("./routes/auth.route");
 const userInfoRoutes = require("./routes/userInfo.route"); 
 
 const app = express();
-//app.use(cors());
-app.use(express.json());
-
-
 app.use(cors({
   origin: "http://localhost:5173", 
   credentials: true 
 }));
+
+app.use(express.json());
+
+
 
 
 app.use(
@@ -25,15 +25,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false,
-      sameSite: "none"
 
     }, 
   })
 );
-
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userInfoRoutes);
-
-
-
 app.listen(3000, () => console.log("Server running on port 3000"));
