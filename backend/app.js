@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(cors({
-  origin: "http://localhost:3001", // ton frontend
+  origin: "http://localhost:5173", // ton frontend
   credentials: true // ⚡ obligatoire pour envoyer les cookies
 }));
 
