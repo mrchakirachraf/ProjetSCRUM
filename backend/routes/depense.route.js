@@ -3,7 +3,7 @@ const router = express.Router();
 const depenseController = require('../controllers/depense.controller');
 
 router.post('/add', depenseController.addDepense);
-
-
+//route pour recuperer l'historique de l'utilisateur.
+router.get('/all', depenseController.getDepenses);
 
 module.exports = router;

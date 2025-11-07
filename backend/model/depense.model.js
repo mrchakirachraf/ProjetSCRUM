@@ -22,7 +22,21 @@ const Depense = {
     );
 
     return result;
+  },
+  //ajouté pour fetcher les depenses de l'utilisateur 
+    getAllDepenses: async (user_id) => {
+    if (!user_id) throw new Error("ID utilisateur manquant.");
+    const [rows] = await pool.execute(
+    
+      `SELECT DATE_FORMAT(date_submission, '%Y-%m-%d %H:%i') AS date_submission, nom, description, categorie, montant
+       FROM depenses
+       WHERE user_id = ?
+       ORDER BY date_submission DESC`,
+       [user_id]
+    );
+    return rows;
   }
+
 
   
 };
