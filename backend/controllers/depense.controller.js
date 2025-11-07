@@ -44,5 +44,21 @@ exports.getDepenses = async (req, res) => {
   }
   };
 
+  
+//le recap hebdomadaire de l'utilisateur 
+
+exports.getWeeklySummary = async (req, res) => {
+  try {
+    const user_id = req.session.userId;
+    if (!user_id) return res.status(401).json({ message: "Utilisateur non connecté." });
+
+    const summary = await Depense.getWeeklySummaryByUser(user_id);
+    res.status(200).json(summary);
+  } catch (error) {
+    console.error("Erreur lors de la récupération du récapitulatif hebdomadaire:", error);
+    res.status(500).json({ message: "Erreur serveur." });
+  }
+};
+
 
 
