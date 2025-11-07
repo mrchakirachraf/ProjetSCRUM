@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const UserInfoCreation = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    nom: "", // Changé de "name" à "nom"
     prenom: "",
     age: "",
     salaire: "",
@@ -15,6 +17,8 @@ const UserInfoCreation = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,13 +27,13 @@ const UserInfoCreation = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-        credentials: "include", // ⬅️ important pour envoyer/recevoir le cookie de session
-
+        credentials: "include",
       });
 
       const data = await res.json();
-      if (data.success) {
+      if (res.ok) {
         alert("Informations enregistrées avec succès ✅");
+        navigate("/welcome");
       } else {
         alert("Erreur : " + data.error);
       }
@@ -46,10 +50,11 @@ const UserInfoCreation = () => {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Changé name="name" en name="nom" */}
           <input
             type="text"
-            name="name"
-            value={formData.name}
+            name="nom" // ICI : changé de "name" à "nom"
+            value={formData.nom}
             onChange={handleChange}
             placeholder="Nom"
             required
@@ -73,6 +78,8 @@ const UserInfoCreation = () => {
             onChange={handleChange}
             placeholder="Âge"
             required
+            min="1"
+            step="1"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#636CCB]"
           />
 
@@ -83,6 +90,8 @@ const UserInfoCreation = () => {
             onChange={handleChange}
             placeholder="Salaire"
             required
+            min="0.01"
+            step="0.01"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#636CCB]"
           />
 
@@ -93,6 +102,8 @@ const UserInfoCreation = () => {
             onChange={handleChange}
             placeholder="Épargne Vie"
             required
+            min="0.00"
+            step="0.01"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#636CCB]"
           />
 
