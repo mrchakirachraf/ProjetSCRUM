@@ -26,14 +26,17 @@ async findById(id) {
   const [rows] = await pool.query("SELECT * FROM users WHERE id = ?", [id]);
   return rows[0];
 },
-async updateSalary(userId, montantDepense) {
-  await pool.query(
-    "UPDATE users SET salaire = salaire - ? WHERE id = ?",
-    [montantDepense, userId]
-  );
-}
 
-
+updateSalaire: async (user_id, montant) => {
+    const [result] = await pool.execute(
+      `UPDATE users SET salaire = salaire - ? WHERE id = ?`,
+      [montant, user_id]
+    );
+    return result;
+  }
 };
+
+
+
 
 module.exports = User;
