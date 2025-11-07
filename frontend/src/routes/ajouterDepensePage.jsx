@@ -76,7 +76,7 @@ const ajouterDepensePage = () => {
           setNom("");
           setDescription("");
           setMontant("");
-          setCategorie("loisirs");
+          setCategorie("Loisirs");
           alert("Dépense enregistrée, vous pouvez en ajouter une autre !");
         } else {
           navigate("/welcome");
