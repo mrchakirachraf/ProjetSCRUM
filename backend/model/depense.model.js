@@ -35,7 +35,32 @@ const Depense = {
        [user_id]
     );
     return rows;
+  },
+    //ajouté pour le recap hebdomadaire de l'utilisateur 
+
+  getWeeklySummaryByUser: async (user_id) => {
+    if (!user_id) throw new Error("ID utilisateur manquant.");
+
+    // Récapitulatif par catégorie et total global
+    const [rows] = await pool.execute(
+      `
+      SELECT 
+        SUM(montant) AS total_global,
+        SUM(CASE WHEN categorie = 'sport' THEN montant ELSE 0 END) AS sport,
+        SUM(CASE WHEN categorie = 'loisir' THEN montant ELSE 0 END) AS loisir,
+        SUM(CASE WHEN categorie = 'alimentation' THEN montant ELSE 0 END) AS alimentation,
+        SUM(CASE WHEN categorie = 'education' THEN montant ELSE 0 END) AS education,
+        SUM(CASE WHEN categorie = 'sante' THEN montant ELSE 0 END) AS sante
+      FROM depenses
+      WHERE user_id = ?
+        AND YEARWEEK(date_submission, 1) = YEARWEEK(CURDATE(), 1) - 1
+      `,
+      [user_id]
+    );
+
+    return rows[0]; // un seul objet avec le total global et par catégorie
   }
+
 
 
   
