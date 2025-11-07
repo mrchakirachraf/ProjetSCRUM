@@ -76,7 +76,7 @@ const ajouterDepensePage = () => {
           setNom("");
           setDescription("");
           setMontant("");
-          setCategorie("Loisirs");
+          setCategorie("loisir");
           alert("Dépense enregistrée, vous pouvez en ajouter une autre !");
         } else {
           navigate("/welcome");
@@ -163,7 +163,7 @@ const ajouterDepensePage = () => {
               required // ← This makes the field required in HTML5
             >
               <option value="">Sélectionnez une catégorie</option> {/* ← Blank/default option */}
-              <option value="loisirs">Loisirs</option>
+              <option value="loisir">Loisirs</option>
               <option value="sport">Sport</option>
               <option value="santé">Santé</option>
               <option value="éducation">Éducation</option>

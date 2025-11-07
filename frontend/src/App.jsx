@@ -7,6 +7,8 @@ import UserInfoCreation from './routes/userInfoCreation';
 import ConnexionPage from './routes/connexionPage';
 import AjouterDepensePage from './routes/ajouterDepensePage';
 import HistoriquePage from './routes/historique';
+import Welcome from './routes/Welcome';
+
 
 
 
@@ -22,6 +24,8 @@ const App = () =>{
         <Route path="/userInfoCreation" element={<UserInfoCreation />} />
         <Route path="/ajouter" element={<AjouterDepensePage />} />
         <Route path="/history" element={<HistoriquePage />} />
+        <Route path="/welcome" element={<Welcome />} />
+
 
       </Routes>
     </Router>
