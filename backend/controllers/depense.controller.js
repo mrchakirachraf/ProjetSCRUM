@@ -29,6 +29,20 @@ exports.addDepense = async (req, res) => {
 
   
 };
+//ajouté pour fetcher les depenses de l'utilisateur et les afficher dans son historique
+
+exports.getDepenses = async (req, res) => {
+  try {
+    const user_id = req.session.userId;
+    if (!user_id) return res.status(401).json({ message: "Utilisateur non connecté." });
+
+    const depenses = await Depense.getAllDepenses(user_id);
+    res.status(200).json(depenses);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des dépenses:", error);
+    res.status(500).json({ message: "Erreur serveur." });
+  }
+  };
 
 
 
