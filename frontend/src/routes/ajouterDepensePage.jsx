@@ -53,10 +53,24 @@ const ajouterDepensePage = () => {
   // Gestion de l’enregistrement
   const handleSave = async (e, stayOnPage = false) => {
     e.preventDefault();
+    
+    if (nom == "") {
+        alert("Veuillez taper un nom");
+        return;
+      }
+    if (description == "") {
+        alert("Veuillez taper une description");
+        return;
+      }
+    if (categorie == "") {
+        alert("Veuillez Selectionner une categorie");
+        return;
+      }
     if (montant <= 0) {
         alert("Le montant doit être supérieur à 0 !");
         return;
       }
+
     const expenseData = { nom, description, montant, categorie };
 
 
