@@ -85,8 +85,39 @@ const HistoriquePage = () => {
   }, [filters]);
 
   // 🔹 Gérer changement filtre
-  const handleChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
+    const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Cas 1 : si on change la date de début
+    if (name === "startDate") {
+      // Si la date de fin existe et startDate > endDate → corriger
+      if (filters.endDate && new Date(value) > new Date(filters.endDate)) {
+        setFilters({
+          ...filters,
+          startDate: value,
+          endDate: value, // on met endDate = startDate
+        });
+        return;
+      }
+    }
+
+    // Cas 2 : si on change la date de fin
+    if (name === "endDate") {
+      // Si aucune startDate → refuser la saisie
+      if (!filters.startDate) {
+        alert("Veuillez d'abord sélectionner une date de début.");
+        return;
+      }
+
+      // Si endDate < startDate → refuser ou corriger
+      if (new Date(value) < new Date(filters.startDate)) {
+        alert("La date de fin doit être supérieure ou égale à la date de début.");
+        return;
+      }
+    }
+
+    // Mise à jour normale
+    setFilters({ ...filters, [name]: value });
   };
 
   return (
@@ -164,12 +195,12 @@ const HistoriquePage = () => {
         <div className="bg-white shadow-md rounded-xl overflow-hidden">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-secondary text-white">
-                <th className="p-3 text-left">Date</th>
-                <th className="p-3 text-left">Nom</th>
-                <th className="p-3 text-left">Description</th>
-                <th className="p-3 text-left">Catégorie</th>
-                <th className="p-3 text-left">Montant (€)</th>
+              <tr className="bg-secondary text-white text-center">
+                <th className="p-3 ">Date</th>
+                <th className="p-3 ">Nom</th>
+                <th className="p-3 ">Description</th>
+                <th className="p-3 ">Catégorie</th>
+                <th className="p-3 ">Montant (€)</th>
               </tr>
             </thead>
             <tbody>
