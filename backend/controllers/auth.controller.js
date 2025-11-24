@@ -1,9 +1,3 @@
-/*Controller (Contrôleur)
-
-Rôle : gérer la logique métier et les actions liées aux requêtes HTTP.
-
-Reçoit les requêtes depuis les routes, appelle le modèle pour manipuler les données, puis renvoie une réponse au client.*/
-
 const bcrypt = require("bcryptjs");
 const User = require("../model/user.model");
 
@@ -78,7 +72,7 @@ register: async (req, res) => {
         return res.status(404).json({ error: "Utilisateur introuvable" });
       }
 
-      // ✅ on retourne uniquement les infos utiles (sans mot de passe !)
+      //  on retourne uniquement les infos utiles 
       res.json({
         id: user.id,
         email: user.email,
