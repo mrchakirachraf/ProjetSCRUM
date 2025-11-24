@@ -41,7 +41,7 @@ const Depense = {
   getWeeklySummaryByUser: async (user_id) => {
     if (!user_id) throw new Error("ID utilisateur manquant.");
 
-    // Récapitulatif par catégorie et total global
+    // Recap par categ et total global
     const [rows] = await pool.execute(
       `
       SELECT 
@@ -59,7 +59,22 @@ const Depense = {
     );
 
     return rows[0]; // un seul objet avec le total global et par catégorie
-  }
+  },
+
+
+  ///ajouté :
+  getDepensesDuMois: async (user_id) => {
+  const [rows] = await pool.execute(
+    `SELECT montant
+     FROM depenses
+     WHERE user_id = ?
+       AND MONTH(date_submission) = MONTH(CURDATE())
+       AND YEAR(date_submission) = YEAR(CURDATE())`,
+    [user_id]
+  );
+  return rows; // tableau des dépenses du mois
+}
+
 
 
 
